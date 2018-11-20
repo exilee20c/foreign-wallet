@@ -1,7 +1,0 @@
-const CONST_MAP = {
-  ADD_UNIT: 'JPY/ADD_UNIT',
-  SET_UNIT: 'JPY/SET_UNIT',
-  REMOVE_UNIT: 'JPY/REMOVE_UNIT',
-};
-
-export default CONST_MAP;

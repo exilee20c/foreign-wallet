@@ -1,7 +1,9 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
-import jpy from './jpy';
+import jpy_trip from "./jpy_trip";
+import common from "./common";
 
 export default combineReducers({
-  jpy: jpy,
+  jpy_trip,
+  common
 });

@@ -1,18 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
 
-import reducers from './redux/reducers';
+import "./index.css";
 
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import reducers from "./redux/reducers";
+import App from "./App";
 
-const store = createStore(reducers);
+import registerServiceWorker, { unregister } from "./registerServiceWorker";
+
+const store = createStore(
+  reducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-document.getElementById('root'));
-registerServiceWorker();
+  document.getElementById("foreign-wallet-root")
+);
+
+if (window._exilee_map && window._exilee_map.is_service_worker_works) {
+  registerServiceWorker();
+} else {
+  unregister();
+}
