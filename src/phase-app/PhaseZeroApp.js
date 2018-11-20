@@ -25,7 +25,7 @@ class PhaseZeroApp extends Component {
         <Button>
           <FontAwesomeIcon icon="yen-sign" /> inline
         </Button>
-        <Button>
+        <Button theme="sky">
           <FontAwesomeIcon icon="yen-sign" /> inline
         </Button>
       </ChooseRoot>

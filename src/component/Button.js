@@ -6,7 +6,29 @@ const ButtonWrapper = styled.div`
   padding: ${props => (props.fluid ? "8px 0" : "8px")};
 
   button {
-    background-color: #ffffff;
+    background-color: ${props =>
+      (props => {
+        switch (props.theme) {
+          case "dark":
+            return "#333333";
+          case "sky":
+            return "#4dd0e1";
+          default:
+            return "#ffffff";
+        }
+      })(props)};
+
+    color: ${props =>
+      (props => {
+        switch (props.theme) {
+          case "dark":
+            return "#ffffff";
+          case "sky":
+            return "#ffffff";
+          default:
+            return "#000000";
+        }
+      })(props)};
 
     display: ${props => (props.fluid ? "block" : "")};
     margin: 0 auto;
