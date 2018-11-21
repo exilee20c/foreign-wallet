@@ -144,54 +144,135 @@ class PhaseOneApp extends Component {
     setTitle({ trip_id, title: e.target.value });
   }
 
-  f10000(value) {
+  f10000(value, is_callee) {
     const trip_id = this.props.common.trip_id;
+    const current_value = this.props.jpy_trip[trip_id].jpy_10000;
+    const lower_value = this.props.jpy_trip[trip_id].jpy_5000;
+    const gap = value - current_value;
+
+    if (!is_callee) {
+      this.f5000(lower_value - gap * 2, true);
+    }
     this.props.setUnit({ trip_id, key: 10000, value: value });
   }
 
-  f5000(value) {
+  f5000(value, is_callee) {
     const trip_id = this.props.common.trip_id;
+    const current_value = this.props.jpy_trip[trip_id].jpy_5000;
+    const lower_value1 = this.props.jpy_trip[trip_id].jpy_2000;
+    const lower_value2 = this.props.jpy_trip[trip_id].jpy_1000;
+    let gap = value - current_value;
+
+    if (!is_callee) {
+      this.f2000(lower_value1 - gap * 2, true);
+      this.f1000(lower_value2 - gap, true);
+    }
     this.props.setUnit({ trip_id, key: 5000, value: value });
   }
-  f2000(value) {
-    const trip_id = this.props.common.trip_id;
-    this.props.setUnit({ trip_id, key: 2000, value: value });
-  }
-  f1000(value) {
-    const trip_id = this.props.common.trip_id;
-    this.props.setUnit({ trip_id, key: 1000, value: value });
-  }
-  f500(value) {
-    const trip_id = this.props.common.trip_id;
-    this.props.setUnit({ trip_id, key: 500, value: value });
-  }
-  f100(value) {
-    const trip_id = this.props.common.trip_id;
-    this.props.setUnit({ trip_id, key: 100, value: value });
-  }
-  f50(value) {
-    const trip_id = this.props.common.trip_id;
-    this.props.setUnit({ trip_id, key: 50, value: value });
-  }
-  f10(value) {
-    const trip_id = this.props.common.trip_id;
-    this.props.setUnit({ trip_id, key: 10, value: value });
-  }
-  f5(value) {
-    const trip_id = this.props.common.trip_id;
-    this.props.setUnit({ trip_id, key: 5, value: value });
 
-    this.f1();
-  }
+  f2000(value, is_callee) {
+    if (value < 0) return;
 
-  f1(value) {
     const trip_id = this.props.common.trip_id;
-    const current_value = this.props.jpy_trip[trip_id].jpy_1;
-    const upper_value = this.props.jpy_trip[trip_id].jpy_5;
+    const current_value = this.props.jpy_trip[trip_id].jpy_2000;
+    const lower_value = this.props.jpy_trip[trip_id].jpy_1000;
     const gap = value - current_value;
 
-    if (upper_value + gap * 5)
-      this.props.setUnit({ trip_id, key: 1, value: value });
+    if (!is_callee) {
+      this.f1000(lower_value - gap * 2, true);
+    }
+    this.props.setUnit({ trip_id, key: 2000, value: value });
+  }
+
+  f1000(value, is_callee) {
+    if (value < 0) return;
+
+    const trip_id = this.props.common.trip_id;
+    const current_value = this.props.jpy_trip[trip_id].jpy_1000;
+    const lower_value = this.props.jpy_trip[trip_id].jpy_500;
+    const gap = value - current_value;
+
+    if (!is_callee) {
+      this.f500(lower_value - gap * 2, true);
+    }
+    this.props.setUnit({ trip_id, key: 1000, value: value });
+  }
+
+  f500(value, is_callee) {
+    if (value < 0) return;
+
+    const trip_id = this.props.common.trip_id;
+    const current_value = this.props.jpy_trip[trip_id].jpy_500;
+    const lower_value = this.props.jpy_trip[trip_id].jpy_100;
+    const gap = value - current_value;
+
+    if (!is_callee) {
+      this.f100(lower_value - gap * 5, true);
+    }
+    this.props.setUnit({ trip_id, key: 500, value: value });
+  }
+
+  f100(value, is_callee) {
+    if (value < 0) return;
+
+    const trip_id = this.props.common.trip_id;
+    const current_value = this.props.jpy_trip[trip_id].jpy_100;
+    const lower_value = this.props.jpy_trip[trip_id].jpy_50;
+    const gap = value - current_value;
+
+    if (!is_callee) {
+      this.f50(lower_value - gap * 2, true);
+    }
+    this.props.setUnit({ trip_id, key: 100, value: value });
+  }
+
+  f50(value, is_callee) {
+    if (value < 0) return;
+
+    const trip_id = this.props.common.trip_id;
+    const current_value = this.props.jpy_trip[trip_id].jpy_50;
+    const lower_value = this.props.jpy_trip[trip_id].jpy_10;
+    const gap = value - current_value;
+
+    if (!is_callee) {
+      this.f10(lower_value - gap * 5, true);
+    }
+    this.props.setUnit({ trip_id, key: 50, value: value });
+  }
+
+  f10(value, is_callee) {
+    if (value < 0) return;
+
+    const trip_id = this.props.common.trip_id;
+    const current_value = this.props.jpy_trip[trip_id].jpy_10;
+    const lower_value = this.props.jpy_trip[trip_id].jpy_5;
+    const gap = value - current_value;
+
+    if (!is_callee) {
+      this.f5(lower_value - gap * 2, true);
+    }
+    this.props.setUnit({ trip_id, key: 10, value: value });
+  }
+  f5(value, is_callee) {
+    if (value < 0) return;
+
+    const trip_id = this.props.common.trip_id;
+    const current_value = this.props.jpy_trip[trip_id].jpy_5;
+    const lower_value = this.props.jpy_trip[trip_id].jpy_1;
+    const gap = value - current_value;
+
+    if (!is_callee) {
+      this.f1(lower_value - gap * 5, true);
+    }
+    this.props.setUnit({ trip_id, key: 5, value: value });
+  }
+
+  f1(value, is_callee) {
+    if (value < 0) return;
+
+    const trip_id = this.props.common.trip_id;
+
+    this.props.setUnit({ trip_id, key: 1, value: value });
   }
 
   makeSetUnit(unit) {
