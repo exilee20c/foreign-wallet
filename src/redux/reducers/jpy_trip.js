@@ -25,7 +25,7 @@ const initialUnits = {
   jpy_10000: 0
 };
 
-export default (state = parsed.jpy_trip || {}, action) => {
+export default (state = (parsed && parsed.jpy_trip) || {}, action) => {
   if (action.type === actions.INIT_TRIP) {
     return {
       ...state,

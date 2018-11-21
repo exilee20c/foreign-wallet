@@ -11,7 +11,7 @@ const AppRoot = styled.main`
   width: 100vw;
   height: 100vh;
   background-color: #81d4fa;
-  overflow: auto;
+  overflow: hidden;
 `;
 
 const PhaseOneAppWithReturnToHome = withReturnToHome(<PhaseOneApp />);

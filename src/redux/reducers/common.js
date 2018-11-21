@@ -16,7 +16,7 @@ const initialState = {
   trip_id: undefined
 };
 
-export default (state = parsed.common || initialState, action) => {
+export default (state = (parsed && parsed.common) || initialState, action) => {
   if (action.type === actions.SET_PHASE) {
     return { ...state, phase: action.payload };
   } else if (action.type === actions.SET_CURRENCY) {
