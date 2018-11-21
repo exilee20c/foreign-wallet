@@ -22,6 +22,22 @@ ReactDOM.render(
   document.getElementById("foreign-wallet-root")
 );
 
+window.onbeforeunload = function() {
+  if (store && typeof store.getState === "function") {
+    const entire_data = store.getState();
+
+    if (
+      window.localStorage &&
+      typeof window.localStorage.setItem === "function"
+    ) {
+      window.localStorage.setItem(
+        "_exilee_entire_data",
+        JSON.stringify(entire_data)
+      );
+    }
+  }
+};
+
 if (window._exilee_map && window._exilee_map.is_service_worker_works) {
   registerServiceWorker();
 } else {

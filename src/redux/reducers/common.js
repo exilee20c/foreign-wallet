@@ -1,12 +1,22 @@
 import actions from "../actions/common";
 
+let parsed = undefined;
+
+if (window.localStorage && typeof window.localStorage.getItem === "function") {
+  const serializedData = window.localStorage.getItem("_exilee_entire_data");
+
+  try {
+    parsed = JSON.parse(serializedData);
+  } catch (e) {}
+}
+
 const initialState = {
   phase: 0,
-  currency: "jpy",
+  currency: undefined,
   trip_id: undefined
 };
 
-export default (state = initialState, action) => {
+export default (state = parsed.common || initialState, action) => {
   if (action.type === actions.SET_PHASE) {
     return { ...state, phase: action.payload };
   } else if (action.type === actions.SET_CURRENCY) {
