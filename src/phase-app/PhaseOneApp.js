@@ -146,6 +146,7 @@ class PhaseOneApp extends Component {
 
   f10000(value, is_callee) {
     const trip_id = this.props.common.trip_id;
+    const value_10000 = this.props.jpy_trip[trip_id].jpy_10000;
     const value_5000 = this.props.jpy_trip[trip_id].jpy_5000;
     const value_2000 = this.props.jpy_trip[trip_id].jpy_2000;
     const value_1000 = this.props.jpy_trip[trip_id].jpy_1000;
