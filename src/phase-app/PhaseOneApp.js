@@ -102,7 +102,7 @@ class PhaseOneApp extends Component {
 
     this.state = {
       number_input: 0,
-      is_number_sync: false
+      is_number_sync: true // TODO false
     };
 
     this.handleNumberInput = this.handleNumberInput.bind(this);
@@ -146,132 +146,146 @@ class PhaseOneApp extends Component {
 
   f10000(value, is_callee) {
     const trip_id = this.props.common.trip_id;
-    const current_value = this.props.jpy_trip[trip_id].jpy_10000;
-    const lower_value = this.props.jpy_trip[trip_id].jpy_5000;
-    const gap = value - current_value;
-
-    if (!is_callee) {
-      this.f5000(lower_value - gap * 2, true);
+    const value_5000 = this.props.jpy_trip[trip_id].jpy_5000;
+    const value_2000 = this.props.jpy_trip[trip_id].jpy_2000;
+    const value_1000 = this.props.jpy_trip[trip_id].jpy_1000;
+    const gap = value - value_10000;
+    if (value_5000 - gap * 2 < 0) {
+      this.f5000(0, true);
+      this.f2000(value_2000 - (gap * 2 - value_5000) * 2, true);
+      this.f1000(value_1000 - (gap * 2 - value_5000), true);
+    } else if (!is_callee) {
+      this.f5000(value_5000 - gap * 2, true);
     }
     this.props.setUnit({ trip_id, key: 10000, value: value });
   }
 
   f5000(value, is_callee) {
     const trip_id = this.props.common.trip_id;
-    const current_value = this.props.jpy_trip[trip_id].jpy_5000;
-    const lower_value1 = this.props.jpy_trip[trip_id].jpy_2000;
-    const lower_value2 = this.props.jpy_trip[trip_id].jpy_1000;
-    let gap = value - current_value;
 
+    const value_5000 = this.props.jpy_trip[trip_id].jpy_5000;
+    const value_2000 = this.props.jpy_trip[trip_id].jpy_2000;
+    const value_1000 = this.props.jpy_trip[trip_id].jpy_1000;
+    const value_500 = this.props.jpy_trip[trip_id].jpy_500;
+
+    let gap = value - value_5000;
+
+    // if (value_5000 - gap * 2 < 0) {
+    //   this.f5000(0, true);
+    //   this.f2000(value_2000 - gap * 4, true);
+    //   this.f1000(value_1000 - gap * 2, true);
+    // } else
     if (!is_callee) {
-      this.f2000(lower_value1 - gap * 2, true);
-      this.f1000(lower_value2 - gap, true);
+      this.f2000(value_2000 - gap * 2, true);
+      this.f1000(value_1000 - gap, true);
     }
+
     this.props.setUnit({ trip_id, key: 5000, value: value });
   }
 
   f2000(value, is_callee) {
-    if (value < 0) return;
-
     const trip_id = this.props.common.trip_id;
-    const current_value = this.props.jpy_trip[trip_id].jpy_2000;
-    const lower_value = this.props.jpy_trip[trip_id].jpy_1000;
-    const gap = value - current_value;
-
-    if (!is_callee) {
-      this.f1000(lower_value - gap * 2, true);
+    const value_2000 = this.props.jpy_trip[trip_id].jpy_2000;
+    const value_1000 = this.props.jpy_trip[trip_id].jpy_1000;
+    const value_500 = this.props.jpy_trip[trip_id].jpy_500;
+    const gap = value - value_2000;
+    if (value_1000 - gap * 2 < 0) {
+      this.f1000(0, true);
+      this.f500(value_500 - (gap * 2 - value_1000) * 2, true);
+    } else if (!is_callee) {
+      this.f1000(value_1000 - gap * 2, true);
     }
     this.props.setUnit({ trip_id, key: 2000, value: value });
   }
 
   f1000(value, is_callee) {
-    if (value < 0) return;
-
     const trip_id = this.props.common.trip_id;
-    const current_value = this.props.jpy_trip[trip_id].jpy_1000;
-    const lower_value = this.props.jpy_trip[trip_id].jpy_500;
-    const gap = value - current_value;
-
-    if (!is_callee) {
-      this.f500(lower_value - gap * 2, true);
+    const value_1000 = this.props.jpy_trip[trip_id].jpy_1000;
+    const value_500 = this.props.jpy_trip[trip_id].jpy_500;
+    const value_100 = this.props.jpy_trip[trip_id].jpy_100;
+    const gap = value - value_1000;
+    if (value_500 - gap * 2 < 0) {
+      this.f500(0, true);
+      this.f100(value_100 - (gap * 2 - value_500) * 5, true);
+    } else if (!is_callee) {
+      this.f500(value_500 - gap * 2, true);
     }
     this.props.setUnit({ trip_id, key: 1000, value: value });
   }
 
   f500(value, is_callee) {
-    if (value < 0) return;
-
     const trip_id = this.props.common.trip_id;
-    const current_value = this.props.jpy_trip[trip_id].jpy_500;
-    const lower_value = this.props.jpy_trip[trip_id].jpy_100;
-    const gap = value - current_value;
-
-    if (!is_callee) {
-      this.f100(lower_value - gap * 5, true);
+    const value_500 = this.props.jpy_trip[trip_id].jpy_500;
+    const value_100 = this.props.jpy_trip[trip_id].jpy_100;
+    const value_50 = this.props.jpy_trip[trip_id].jpy_50;
+    const gap = value - value_500;
+    if (value_100 - gap * 5 < 0) {
+      this.f100(0, true);
+      this.f50(value_50 - (gap * 5 - value_100) * 2, true);
+    } else if (!is_callee) {
+      this.f100(value_100 - gap * 5, true);
     }
     this.props.setUnit({ trip_id, key: 500, value: value });
   }
 
   f100(value, is_callee) {
-    if (value < 0) return;
-
     const trip_id = this.props.common.trip_id;
-    const current_value = this.props.jpy_trip[trip_id].jpy_100;
-    const lower_value = this.props.jpy_trip[trip_id].jpy_50;
-    const gap = value - current_value;
-
-    if (!is_callee) {
-      this.f50(lower_value - gap * 2, true);
+    const value_100 = this.props.jpy_trip[trip_id].jpy_100;
+    const value_50 = this.props.jpy_trip[trip_id].jpy_50;
+    const value_10 = this.props.jpy_trip[trip_id].jpy_10;
+    const gap = value - value_100;
+    if (value_50 - gap * 2 < 0) {
+      this.f50(0, true);
+      this.f10(value_10 - (gap * 2 - value_50) * 5, true);
+    } else if (!is_callee) {
+      this.f50(value_50 - gap * 2, true);
     }
     this.props.setUnit({ trip_id, key: 100, value: value });
   }
 
   f50(value, is_callee) {
-    if (value < 0) return;
-
     const trip_id = this.props.common.trip_id;
-    const current_value = this.props.jpy_trip[trip_id].jpy_50;
-    const lower_value = this.props.jpy_trip[trip_id].jpy_10;
-    const gap = value - current_value;
-
-    if (!is_callee) {
-      this.f10(lower_value - gap * 5, true);
+    const value_50 = this.props.jpy_trip[trip_id].jpy_50;
+    const value_10 = this.props.jpy_trip[trip_id].jpy_10;
+    const value_5 = this.props.jpy_trip[trip_id].jpy_5;
+    const gap = value - value_50;
+    if (value_10 - gap * 5 < 0) {
+      this.f10(0, true);
+      this.f5(value_5 - (gap * 5 - value_10) * 2, true);
+    } else if (!is_callee) {
+      this.f10(value_10 - gap * 5, true);
     }
     this.props.setUnit({ trip_id, key: 50, value: value });
   }
 
   f10(value, is_callee) {
-    if (value < 0) return;
-
     const trip_id = this.props.common.trip_id;
-    const current_value = this.props.jpy_trip[trip_id].jpy_10;
-    const lower_value = this.props.jpy_trip[trip_id].jpy_5;
-    const gap = value - current_value;
-
-    if (!is_callee) {
-      this.f5(lower_value - gap * 2, true);
+    const value_10 = this.props.jpy_trip[trip_id].jpy_10;
+    const value_5 = this.props.jpy_trip[trip_id].jpy_5;
+    const value_1 = this.props.jpy_trip[trip_id].jpy_1;
+    const gap = value - value_10;
+    if (value_5 - gap * 2 < 0) {
+      this.f5(0, true);
+      this.f1(value_1 - (gap * 2 - value_5) * 5, true);
+    } else if (!is_callee) {
+      this.f5(value_5 - gap * 2, true);
     }
     this.props.setUnit({ trip_id, key: 10, value: value });
   }
+
   f5(value, is_callee) {
-    if (value < 0) return;
-
     const trip_id = this.props.common.trip_id;
-    const current_value = this.props.jpy_trip[trip_id].jpy_5;
-    const lower_value = this.props.jpy_trip[trip_id].jpy_1;
-    const gap = value - current_value;
-
+    const value_5 = this.props.jpy_trip[trip_id].jpy_5;
+    const value_1 = this.props.jpy_trip[trip_id].jpy_1;
+    const gap = value - value_5;
     if (!is_callee) {
-      this.f1(lower_value - gap * 5, true);
+      this.f1(value_1 - gap * 5);
     }
     this.props.setUnit({ trip_id, key: 5, value: value });
   }
 
-  f1(value, is_callee) {
-    if (value < 0) return;
-
+  f1(value) {
     const trip_id = this.props.common.trip_id;
-
     this.props.setUnit({ trip_id, key: 1, value: value });
   }
 
@@ -390,6 +404,14 @@ class PhaseOneApp extends Component {
                     onChange={this[`setUnit${unit}`]}
                     value={
                       this.state.is_number_sync ? my_jpy_trip[`jpy_${unit}`] : 0
+                    }
+                    min={
+                      this.state.is_number_sync && unit === 1
+                        ? parseInt(
+                            (this.state.number_input - upper_totals) / unit,
+                            0
+                          )
+                        : ""
                     }
                     max={
                       this.state.is_number_sync
