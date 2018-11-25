@@ -92,6 +92,10 @@ const ChooseRoot = styled.div`
       vertical-align: middle;
     }
   }
+
+  div.btn-array {
+    text-align: center;
+  }
 `;
 
 library.add(faSyncAlt, faYenSign, faTimes, faThumbtack);
@@ -108,6 +112,8 @@ class PhaseOneApp extends Component {
     this.handleNumberInput = this.handleNumberInput.bind(this);
     this.handleTitleInput = this.handleTitleInput.bind(this);
     this.handleSync = this.handleSync.bind(this);
+    this.handleDropTrip = this.handleDropTrip.bind(this);
+    this.confirmAndNext = this.confirmAndNext.bind(this);
 
     this.setUnit1 = this.makeSetUnit(1).bind(this);
     this.setUnit5 = this.makeSetUnit(5).bind(this);
@@ -231,6 +237,22 @@ class PhaseOneApp extends Component {
     };
   }
 
+  confirmAndNext () {
+    const { common, confirm, setPhase } = this.props;
+    const { trip_id } = common;
+
+    confirm(trip_id);
+    setPhase(2);
+  }
+
+  handleDropTrip() {
+    const { common, dropTrip, setPhase } = this.props;
+    const { trip_id } = common;
+
+    setPhase(0);
+    dropTrip(trip_id);
+  }
+
   handleSync() {
     if (!this.state.is_number_sync) {
       this.textRangeAlgorithm();
@@ -277,7 +299,8 @@ class PhaseOneApp extends Component {
     const { common, jpy_trip } = this.props;
     const { trip_id } = common;
     const { [trip_id]: my_jpy_trip } = jpy_trip;
-    const { jpy_title, jpy_confirmed } = my_jpy_trip;
+    const { jpy_title } = my_jpy_trip;
+    let upper_totals = 0;
 
     return (
       <ChooseRoot>
@@ -314,7 +337,7 @@ class PhaseOneApp extends Component {
           {[1, 5, 10, 50, 100, 500, 1000, 2000, 5000, 10000]
             .reverse()
             .map(unit => {
-              let upper_totals = 0;
+              upper_totals = 0;
 
               if (+unit < 10000) upper_totals += my_jpy_trip.jpy_10000 * 10000;
               if (+unit < 5000) upper_totals += my_jpy_trip.jpy_5000 * 5000;
@@ -354,6 +377,34 @@ class PhaseOneApp extends Component {
               );
             })}
         </div>
+
+        <div className="btn-array">
+          <Button
+            onClick={
+              this.state.number_input &&
+              upper_totals + my_jpy_trip.jpy_1 === this.state.number_input
+                ? this.confirmAndNext
+                : () => {}
+            }
+            thick
+            theme={
+              this.state.number_input &&
+              upper_totals + my_jpy_trip.jpy_1 === this.state.number_input
+                ? "sky"
+                : "disabled"
+            }
+            style={{ width: "150px" }}
+          >
+            다음으로
+          </Button>
+          <Button
+            onClick={this.handleDropTrip}
+            thick
+            style={{ width: "150px" }}
+          >
+            취소하기
+          </Button>
+        </div>
       </ChooseRoot>
     );
   }
@@ -365,8 +416,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  dropTrip: payload => dispatch({ type: jpy_trip_actions.DROP_TRIP, payload }),
   setTitle: payload => dispatch({ type: jpy_trip_actions.SET_TITLE, payload }),
   setUnit: payload => dispatch({ type: jpy_trip_actions.SET_UNIT, payload }),
+  confirm: payload => dispatch({ type: jpy_trip_actions.CONFIRM, payload }),
   setPhase: phase =>
     dispatch({ type: common_actions.SET_PHASE, payload: phase })
 });

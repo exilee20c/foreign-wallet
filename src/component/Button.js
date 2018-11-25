@@ -13,6 +13,8 @@ const ButtonWrapper = styled.div`
             return "#333333";
           case "sky":
             return "#4dd0e1";
+          case "disabled":
+            return "#bdbdbd";
           default:
             return "#ffffff";
         }
@@ -25,11 +27,14 @@ const ButtonWrapper = styled.div`
             return "#ffffff";
           case "sky":
             return "#ffffff";
+          case "disabled":
+            return "#eeeeee";
           default:
             return "#000000";
         }
       })(props)};
 
+    font-weight: ${props => (props.thick ? "bold" : "normal")};
     display: ${props => (props.fluid ? "block" : "")};
     margin: 0 auto;
     padding: ${props => (props.fluid ? "16px 0" : "16px 32px")};
@@ -66,10 +71,10 @@ const ButtonWrapper = styled.div`
 
 class Button extends Component {
   render() {
-    const { children, theme, fluid, ...rest } = this.props;
+    const { children, theme, thick, fluid, ...rest } = this.props;
 
     return (
-      <ButtonWrapper theme={theme} fluid={fluid}>
+      <ButtonWrapper thick={thick} theme={theme} fluid={fluid}>
         <button {...rest}>{children}</button>
       </ButtonWrapper>
     );

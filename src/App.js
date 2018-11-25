@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import withReturnToHome from "./phase-app/withReturnToHome";
 import PhaseZeroApp from "./phase-app/PhaseZeroApp";
 import PhaseOneApp from "./phase-app/PhaseOneApp";
+import PhaseTwoApp from "./phase-app/PhaseTwoApp";
 
 const AppRoot = styled.main`
   width: 100vw;
@@ -15,6 +16,7 @@ const AppRoot = styled.main`
 `;
 
 const PhaseOneAppWithReturnToHome = withReturnToHome(<PhaseOneApp />);
+const PhaseTwoAppWithReturnToHome = withReturnToHome(<PhaseTwoApp />);
 
 class App extends Component {
   render() {
@@ -25,6 +27,7 @@ class App extends Component {
       <AppRoot>
         {phase === 0 && <PhaseZeroApp />}
         {phase === 1 && <PhaseOneAppWithReturnToHome />}
+        {phase === 2 && <PhaseTwoAppWithReturnToHome />}
       </AppRoot>
     );
   }

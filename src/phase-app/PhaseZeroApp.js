@@ -87,7 +87,7 @@ class PhaseZeroApp extends Component {
             })
           }
           fluid
-          style={{ fontWeight: "bold" }}
+          thick
         >
           <FontAwesomeIcon icon="yen-sign" /> {jpy_title || "제목없는 여행"}
         </Button>
@@ -105,7 +105,7 @@ class PhaseZeroApp extends Component {
             onClick={this.handleNewYenTripClick}
             theme="sky"
             fluid
-            style={{ fontWeight: "bold" }}
+            thick
           >
             <FontAwesomeIcon icon="yen-sign" /> 새 여행 만들기
           </Button>

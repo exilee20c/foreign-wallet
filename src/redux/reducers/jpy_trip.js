@@ -22,7 +22,8 @@ const initialUnits = {
   jpy_1000: 0,
   jpy_2000: 0,
   jpy_5000: 0,
-  jpy_10000: 0
+  jpy_10000: 0,
+  jpy_history: []
 };
 
 export default (state = (parsed && parsed.jpy_trip) || {}, action) => {
@@ -50,11 +51,16 @@ export default (state = (parsed && parsed.jpy_trip) || {}, action) => {
   } else if (action.type === actions.CONFIRM) {
     return {
       ...state,
-      [action.payload.trip_id]: {
-        ...state[action.payload.trip_id],
+      [action.payload]: {
+        ...state[action.payload],
         jpy_confirmed: true
       }
     };
+  } else if (action.type === actions.DROP_TRIP) {
+    const to_be_state = { ...state };
+    delete to_be_state[action.payload];
+
+    return to_be_state;
   } else {
     return state;
   }
