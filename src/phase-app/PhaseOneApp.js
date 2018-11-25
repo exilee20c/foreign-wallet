@@ -102,7 +102,7 @@ class PhaseOneApp extends Component {
 
     this.state = {
       number_input: 0,
-      is_number_sync: true // TODO false
+      is_number_sync: false
     };
 
     this.handleNumberInput = this.handleNumberInput.bind(this);
